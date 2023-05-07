@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <MessageBox Message="@shareId" Show="@show"></MessageBox>
+    <MessageBox Message="@shareMessage" Show="@show"></MessageBox>
 
 </div>
 
@@ -38,12 +38,9 @@
     private static readonly string resultId = Data.Constants.resultId;
     private string code { get; set; } = Data.Constants.defultCode;
     private string InputValue { get; set; } = "在此输入框输入内容";
-    private string share { get; set; } = "分享代码";
     private ConsoleIn consoleIn;
     private string Result = "等待编译……";
     private bool show = false;
-
-    
 
     private void HandleValueChanged(string newValue) {
         Console.WriteLine("newValue" + newValue);

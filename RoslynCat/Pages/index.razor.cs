@@ -20,7 +20,7 @@ namespace RoslynCat.Pages
 
         public List<CodeSampleGroupAndTitle> Options;
 
-        private string shareId = string.Empty;
+        private string shareMessage = string.Empty;
         string baseUri;
 
         protected override async void OnInitialized() {
@@ -38,7 +38,7 @@ namespace RoslynCat.Pages
                 code = await GistService.GetGistContentAsync(gistId);
             }
             else {
-                code = await JsRuntimeExt.Shared.GetOldCode()??code;
+                code = await JsRuntimeExt.Shared.GetOldCode() ?? code;
             }
             Result = "等待编译……";
             await JsRuntimeExt.Shared.CreateMonacoEditorAsync(editorId,code);
@@ -104,8 +104,13 @@ namespace RoslynCat.Pages
             code = await JsRuntimeExt.Shared.GetValue(editorId);
             if (string.IsNullOrEmpty(code)) return;
             await GistService.CreateGistAsync(code);
-            shareId = $"{baseUri}codeshare/{GistService.GistId}";
-            await JsRuntimeExt.Shared.CopyUrl(shareId);
+            if (GistService.GistId is not null) {
+                shareMessage = $"{baseUri}codeshare/{GistService.GistId}";
+                await JsRuntimeExt.Shared.CopyUrl(shareMessage);
+            }
+            else {
+                shareMessage = "代码分享失败，请联系管理员更新GistID";
+            }
             show = true;
         }
 

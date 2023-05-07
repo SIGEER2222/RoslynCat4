@@ -7,7 +7,7 @@
         <button class="message-box-close" @onclick="HideMessageBox">X</button>
     </div>
     <div class="message-box-content">
-        <p>地址已复制到剪切板： @Message</p>
+        <p>@(Message.Length > 0 ? $"地址已复制到剪切板：{Message}" : err)</p>
     </div>
 </div>
 
@@ -20,4 +20,6 @@
     private void HideMessageBox() {
         show = false;
     }
+    private string err = "代码分享失败，请联系管理员更新GistID";
+    private string succeed = "";
 }

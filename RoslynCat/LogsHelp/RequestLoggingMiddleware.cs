@@ -16,6 +16,7 @@
             Console.WriteLine($"IP Address: {ipAddress}, Request Path: {requestPath}");
 
             await _next(context);
+
         }
     }
 }

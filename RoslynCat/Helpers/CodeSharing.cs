@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using RoslynCat.Interface;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 
@@ -37,7 +38,21 @@ namespace RoslynCat.Helpers
 			};
 			//var createGistResponse = await _githubClient.PostAsJsonAsync("/gists", createGistContent);
 			var response = await _githubClient.PostAsync("/gists", new StringContent(createGistContent.ToString()));
-			var result = await response.Content.ReadFromJsonAsync<JsonObject>();
+
+            if (!response.IsSuccessStatusCode) {
+                if (response.StatusCode == HttpStatusCode.Unauthorized) {
+                    // Handle "Bad credentials" error here
+                    Console.WriteLine("Error: Bad credentials");
+                    return;
+                }
+                else {
+                    // Handle other errors here
+                    Console.WriteLine($"Error: {response.ReasonPhrase}");
+                    return;
+                }
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<JsonObject>();
 			GistId = result["id"].AsValue().ToString();
 		}
 

@@ -14,7 +14,7 @@ namespace RoslynCat.Rules
         /// <param name="services">要添加服务的 IServiceCollection。</param>
         /// <param name="configuration">用于配置的 IConfiguration 实例。</param>
         /// <returns>更新后的 IServiceCollection。</returns>
-        public static IServiceCollection AddMyServices(this IServiceCollection services,IConfiguration configuration) {
+        public static IServiceCollection AddRoslynCatServices(this IServiceCollection services,IConfiguration configuration) {
             // 使用提供的配置文件，配置 AppSettings 类型的服务。
             services.Configure<AppSettings>(configuration);
 

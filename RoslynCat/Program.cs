@@ -6,10 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddMyServices(builder.Configuration);
-builder.Services.AddHttpClient("GithubApi",client => {
-    client.BaseAddress = new Uri("https://api.github.com");
-});
+builder.Services.AddRoslynCatServices(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
